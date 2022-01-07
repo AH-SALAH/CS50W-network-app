@@ -1,0 +1,14 @@
+
+{% if not register and not login %}
+    {% for post in page_obj.object_list %}
+        {% include "./post.html" with post=post list=page_obj.object_list %}
+        
+        {% empty %}
+        <h5 class="my-5 text-center">
+            <i class="fas fa-box-open fa-2x mb-2"></i>
+            <p>No Posts Yet x(</p>
+        </h5>
+    {% endfor %}
+
+    {% include "./pagination.html" with page_obj=page_obj paginator=paginator extra_param='&nt=all-posts' %}
+{% endif %}

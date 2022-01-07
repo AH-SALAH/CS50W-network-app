@@ -1,0 +1,29 @@
+{% if user.is_authenticated %}
+    <div class="card border-0 rounded-0 py-4 p-2 px-md-3 bg-dark text-white">
+        <div class="d-flex justify-content-start align-items-center">
+            <h6 class="d-flex justify-content-start align-items-center mb-1 position-relative">
+                <i class="fas fa-users me-2"></i>
+                <span class="me-2">Followings</span> 
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{followings_count}}
+                    <span class="visually-hidden">Followings</span>
+                </span>
+            </h6>
+        </div>
+    </div>
+
+    {% for post in followings_page_obj.object_list %}    
+        {% include "./post.html" with post=post list=followings_page_obj.object_list %}
+    {% empty %}
+        <h5 class="my-5 text-center">
+            <i class="fas fa-box-open fa-2x mb-2"></i>
+            <p>No Followings Yet, Try to follow some! :(</p>
+        </h5>
+    {% endfor %}
+
+    {% include "./pagination.html" with  page_obj=followings_page_obj paginator=followings_paginator extra_param='&nt=following' %}
+
+{% else %}
+    {% include "/login.html" %}
+{% endif %}
+

@@ -1,0 +1,109 @@
+version: "3.9"
+
+services:
+  ## db service
+  db:
+    image: postgres:alpine
+    container_name: psql_db
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/dev/db_data:/var/lib/postgresql/data
+    env_file:
+      - ./env/db_dev.env
+    networks:
+      server-side:
+        ipv4_address: 192.168.0.2
+        aliases: 
+          - db
+  
+  ## db admin service
+  db_admin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    ports:
+      - 5050:80
+    volumes:
+      - ./db/dev/pgadmin_data:/var/lib/pgadmin
+    env_file:
+      - ./env/db_admin_dev.env
+    networks:
+      server-side:
+        ipv4_address: 192.168.0.3
+        aliases: 
+          - db_admin
+    domainname: dbadmin.com
+    hostname: dbadmin
+
+  ## backend service
+  backend:
+    build: .
+    image: backend:django
+    container_name: backend_django
+    ports:
+      - 8000:8000
+    volumes:
+      # for this specific proejct we'll map specific folders/files
+      # because we need not to change folders structure as per proj requiremens
+      # - .:/app
+      - ./project4:/app/project4
+      - ./network:/app/network
+      - ./manage.py:/app/manage.py
+      - ./entrypoint_dev.sh:/app/entrypoint_dev.sh
+      - admin_static:/app/.venv/lib/python3.10/site-packages/django/contrib/admin/static/admin
+    depends_on:
+      - db
+    env_file:
+      - ./env/bend_dev.env
+    networks:
+      server-side:
+        ipv4_address: 192.168.0.4
+        aliases: 
+          - backend
+    domainname: backend.com
+    hostname: backend
+    logging:
+      driver: "syslog"
+      options:
+        syslog-address: "udp://192.168.0.4:514"
+    entrypoint: ["sh", "./entrypoint_dev.sh"]
+
+  # nginx setup
+  nginx:
+    build: ./nginx
+    image: nginx
+    container_name: nginx_server
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./network/static/network:/usr/share/nginx/html/backend/static/network
+      - /usr/share/nginx/html/backend/static/network/frontend/
+      - admin_static:/usr/share/nginx/html/backend/static/admin:ro
+      - static:/usr/share/nginx/html/backend/static
+      - media:/usr/share/nginx/html/backend/media
+    networks:
+      server-side:
+        aliases:
+          - nginx
+    depends_on:
+      - db
+      - db_admin
+      - backend
+
+volumes:
+  static:
+  media:
+  admin_static:
+
+## networks
+networks:
+  server-side:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "192.168.0.0/24"
+          gateway: "192.168.0.1"

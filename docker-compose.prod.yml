@@ -1,0 +1,102 @@
+version: "3.9"
+
+services:
+  ## db service
+  db:
+    image: postgres:alpine
+    container_name: psql_db
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/prod/db_data:/var/lib/postgresql/data
+    env_file:
+      - ./env/db_prod.env
+    networks:
+      server-side:
+        ipv4_address: 192.168.0.2
+        aliases: 
+          - db
+  
+  ## db admin service
+  db_admin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - 5050:80
+    volumes:
+      - ./db/prod/pgadmin_data:/var/lib/pgadmin
+    env_file:
+      - ./env/db_admin_prod.env
+    networks:
+      server-side:
+        ipv4_address: 192.168.0.3
+        aliases: 
+          - db_admin
+    domainname: dbadmin.com
+    hostname: dbadmin
+
+  ## backend service
+  backend:
+    build: .
+    image: backend:django
+    container_name: backend_django
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      # for this specific proejct we'll map specific folders/files
+      # because we need not to change folders structure as per proj requiremens
+      # - .:/app
+      - ./project4:/app/project4
+      - ./network:/app/network
+      - ./manage.py:/app/manage.py
+      - ./entrypoint_prod.sh:/app/entrypoint_prod.sh
+      - static:/app/static
+      - media:/app/media
+    depends_on:
+      - db
+    env_file:
+      - ./env/bend_prod.env
+    networks:
+      server-side:
+        ipv4_address: 192.168.0.4
+        aliases: 
+          - backend
+    domainname: backend.com
+    hostname: backend
+    entrypoint: ["sh", "./entrypoint_prod.sh"]
+
+  # nginx setup
+  nginx:
+    image: nginxinc/nginx-unprivileged:stable-alpine
+    container_name: nginx_server
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
+      - static:/usr/share/nginx/html/backend/static:ro
+      - media:/usr/share/nginx/html/backend/media:ro
+    networks:
+      server-side:
+        aliases:
+          - nginx
+    depends_on:
+      - db
+      - db_admin
+      - backend
+
+volumes:
+  static:
+  media:
+
+## networks
+networks:
+  server-side:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "192.168.0.0/24"
+          gateway: "192.168.0.1"

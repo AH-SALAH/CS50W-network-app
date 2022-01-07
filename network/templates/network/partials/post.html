@@ -1,0 +1,45 @@
+{% load temp_tags %}
+
+<div class="card card-{{post.pk}} border-0 border-top p-3">
+    <div class="row g-0">
+        <div class="col-3 col-md-2 col-lg-1">
+            <div class="img-wrapper d-flex justify-content-start align-items-start py-0 pe-3">
+                <img src="https://ui-avatars.com/api/?background=ddd&rounded=true&name={{post.user.username}}" class="rounded-circle" height="45"
+                    alt="user" loading="lazy" />
+            </div>
+        </div>
+        <div class="col-9 col-md-10 col-lg-11">
+            <div class="card-body py-0 pe-0">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="card-title d-flex justify-content-between justify-content-md-start align-items-center flex-wrap mb-0">
+                        <a class="text-dark" href="{% url 'profile' post.user.username|slugify %}"><strong class="me-2 mb-1">{{ post.user.username }} &dtdot; </strong></a>
+                        <small class="text-muted" data-bs-toggle="tooltip" title="{{post.published_date|date:'d/m/Y h:i A e'}}">{{ post.published_date|timesince }} ago</small>
+                    </h6>
+                    {% if user.is_authenticated and post.user == user %}
+                        <div class="edit-post-btn-area" data-post="{{list|json_serialize|arr_filter:post.pk}}" data-likes-count="{{post.likes_count}}"></div>
+                    {% endif %}
+                </div>
+                <div class="card-text-content my-2">
+                    <p class="card-text">{{ post.content }}</p>
+                </div>
+                <div class="card-text d-flex justify-content-between align-items-center">
+                    <div class="post-likes d-flex justify-content-start align-items-center">
+                        <i class="fas fa-wave-square fa-wave-square-{{post.pk}} fa-sm text-white"></i>
+                        {% if user.is_authenticated %}
+                            {% if post.user != user %}
+                                <div class="post-like-btn" data-post="{{list|json_serialize|arr_filter:post.pk}}" data-likes-count="{{post.likes_count}}"></div>
+                            {% else %}
+                                <i class="fas fa-heartbeat text-{% if post.likes_count > 0 %}danger{% else %}secondary{% endif %} px-2 py-1 m-0 fa-sm"></i>
+                            {% endif %}
+                        {% else %}
+                            <i class="fas fa-heartbeat text-{% if post.likes_count > 0 %}danger{% else %}secondary{% endif %} px-2 py-1 m-0 fa-sm"></i>
+                        {% endif %}
+                        <small class="post-likes__count-{{post.pk}} text-secondary mx-2" data-bs-toggle="tooltip" data-bs-html="true" title="{% for liker in post.likers|slice:':5' %} {% if liker %} {{liker}}{% else %} {% if post.user != user %}No likes, be the first {% else %}No Likes :( {% endif %} {% endif %}{% if not forloop.last %}<br> {% endif %}{% if forloop.last and post.likers|length > 5 %}...{% endif %}{% endfor %}"> 
+                            {{ post.likes_count }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{% load i18n %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+    <!-- Pagination -->
+    <nav class="p-4 border-top" aria-label="page nav">
+        <ul class="pagination pagination-circle justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item first-li me-auto d-flex">
+                    <a class="page-link rounded-pill first-btn me-2" href="?page=1{% if extra_param %}{{extra_param}}{% endif %}" tabindex="-1" aria-disabled="true">{% trans "First" context "pagination first btn" %}</a>
+                    <a class="page-link rounded-pill prev-btn" href="?page={{ page_obj.previous_page_number }}{% if extra_param %}{{extra_param}}{% endif %}" tabindex="-1" aria-disabled="true">&laquo; {% trans "Previous" context "pagination previous btn" %}</a>
+                </li>
+            {% endif %}
+            <!-- {% for p in paginator.page_range %}
+                <li class="page-item mx-1 {% if page_obj.number == p %}active disabled{% endif %}" aria-current="page">
+                    <a class="page-link {% if page_obj.number == p %}text-muted{% endif %} rounded-pill" href="?page={{ p }}{% if extra_param %}{{extra_param}}{% endif %}">{{p}} <span class="sr-only">({% trans "current" context "pagination current page" %})</span></a>
+                </li>
+            {% endfor %} -->
+            {% if page_obj.has_next %}
+                <li class="page-item next-li ms-auto d-flex">
+                    <a class="page-link rounded-pill next-btn" href="?page={{ page_obj.next_page_number }}{% if extra_param %}{{extra_param}}{% endif %}">{% trans "Next" context "pagination next btn" %} &raquo;</a>
+                    <a class="page-link rounded-pill last-btn ms-2" href="?page={{ page_obj.paginator.num_pages }}{% if extra_param %}{{extra_param}}{% endif %}">{% trans "Last" context "pagination last btn" %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}

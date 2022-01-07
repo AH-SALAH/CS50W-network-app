@@ -1,0 +1,46 @@
+{% load static %}
+
+{% if user.is_authenticated %}    
+    <div class="card border-0 rounded-0 py-4 p-2 px-md-3 bg-dark text-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <h6 class="d-flex justify-content-start align-items-center mb-1 position-relative">
+                <i class="fas fa-users me-2"></i>
+                <span class="me-2">Followings</span> 
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{user_followings_count}}
+                    <span class="visually-hidden">Followings</span>
+                </span>
+            </h6>
+            
+            <h6 class="d-flex justify-content-start align-items-center mb-1 position-relative">
+                <i class="fas fa-user-friends me-2"></i>
+                <span class="me-2">Followers</span> 
+                <span class="follower-number position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{user_followers_count}}
+                    <span class="visually-hidden">Followers</span>
+                </span>
+            </h6>
+            {% if user.is_authenticated and usr_slg and request.user.username|slugify != usr_slg %}
+                <h6 class="follow-btn d-flex justify-content-start align-items-center mb-1" data-follow-user={{user_followed}} data-followed="{{is_user_followed}}">
+
+                    <script src="{% static 'network/follow.bundle.js' %}" defer></script>
+                </h6>
+            {% endif %}
+        </div>
+    </div>
+
+
+    {% for post in user_page_obj.object_list %}    
+        {% include "./post.html" with post=post list=user_page_obj.object_list %}
+    {% empty %}
+        <h5 class="my-5 text-center">
+            <i class="fas fa-box-open fa-2x mb-2"></i>
+            <p>No Posts Yet :(</p>
+        </h5>
+    {% endfor %} 
+
+    {% include "./pagination.html" with page_obj=user_page_obj paginator=user_paginator extra_param='&nt=profile' %}
+
+{% else %}
+    {% include "../login.html" %}
+{% endif %}

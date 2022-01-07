@@ -1,0 +1,179 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Home 
+{% endblock title %}
+    
+
+{% block body %}
+    <div class="d-flex justify-content-start align-items-center">
+    </div>
+
+    <div class="row flex-wrap gx-0 flex-grow-1">
+        <!-- left -->
+        <div class="col-2 col-md-3 left-content">
+            <div class="nav flex-column nav-pills text-center mx-auto border-end h-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="mb-3 p-3 px-md-4 d-flex justify-content-start align-items-center me-auto border-bottom border-top w-100" id="side-logo" href="{% url 'index' %}" aria-controls="side-logo" aria-selected="false">
+                    <span class="rounded-circle bg-dark d-flex justify-content-center align-items-center text-white">
+                        <i class="fas fa-network-wired fa-sm"></i>
+                    </span>
+                    <span class="mx-3 w-auto h-auto text-dark fw-bold d-none d-md-flex">Network</span>
+                </a>
+
+                <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2  {% if nt == 'all-posts' or not nt %}active{% endif %}" id="v-pills-allposts-tab"
+                    href="{% url 'index' %}" role="tab" aria-controls="v-pills-allposts"
+                    aria-selected="false">
+                    <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                        <i class="fas fa-comments"></i>
+                        <span class="mx-3 d-none d-md-flex">All Posts</span>
+                    </span>
+                </a>
+                {% if user.is_authenticated %}
+                    <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2 {% if nt == 'following' %}active{% endif %}" id="v-pills-following-tab"
+                        href="{% url 'following' request.user.username|slugify %}" role="tab" aria-controls="v-pills-following"
+                        aria-selected="false">
+                        <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                            <i class="fas fa-check-double"></i>
+                            <span class="mx-3 d-none d-md-flex">Following</span>
+                        </span>
+                    </a>
+                    {% if usr_slg != request.user.username|slugify and nt == 'profile' %}
+                        <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2 {% if nt == 'profile' and usr_slg != request.user.username %}active{% endif %}" id="v-pills-profile-tab" 
+                            data-bs-toggle="pill" href="#v-pills-profile" role="tab"
+                            aria-controls="v-pills-profile" aria-selected="true">
+                            <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                                <i class="fas fa-address-card"></i>
+                                <div class="mx-3 me-0 d-none d-md-flex justify-content-between align-items-center">
+                                    <span class="me-2">Profile</span>
+                                    <small class="badge rounded-pill bg-danger">{{usr_slg}}</small></div>
+                            </span>
+                        </a>
+                        <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2 {% if nt == 'profile' and usr_slg == request.user.username|slugify %}active{% endif %}" id="v-pills-profile-tab" 
+                            href="{% url 'profile' request.user.username|slugify %}" role="tab"
+                            aria-controls="v-pills-profile" aria-selected="true">
+                            <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                                <i class="fas fa-id-card-alt"></i>
+                                <span class="mx-3 d-none d-md-flex">My Profile</span>
+                            </span>
+                        </a>
+                    {% else %}
+                        <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2 {% if nt == 'profile' and usr_slg == request.user.username|slugify %}active{% endif %}" id="v-pills-profile-tab" 
+                            href="{% url 'profile' request.user.username|slugify %}" role="tab"
+                            aria-controls="v-pills-profile" aria-selected="true">
+                            <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                                <i class="fas fa-address-card"></i>
+                                <span class="mx-3 d-none d-md-flex">Profile</span>
+                            </span>
+                        </a>
+                    {% endif %}
+                    <hr class="my-3 mx-0">
+                    <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2" id="logout-btn" href="{% url 'logout' %}"
+                        aria-controls="logout-btn" aria-selected="false">
+                        <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span class="mx-3 d-none d-md-flex">Logout</span>
+                        </span>
+                    </a>
+                {% else %}
+                    <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2" id="v-pills-login-tab"
+                        data-bs-toggle="pill" href="#v-pills-login" role="tab" aria-controls="v-pills-login"
+                        aria-selected="false">
+                        <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span class="mx-3 d-none d-md-flex">Login</span>
+                        </span>
+                    </a>
+                    <a class="nav-link rounded-pill me-auto py-1 px-md-3 px-2" id="v-pills-register-tab"
+                        data-bs-toggle="pill" href="#v-pills-register" role="tab" aria-controls="v-pills-register"
+                        aria-selected="false">
+                        <span class="p-2 px-md-3 rounded-pill d-flex justify-content-center align-items-center">
+                            <i class="fas fa-clipboard-check"></i>
+                            <span class="mx-3 d-none d-md-flex">Register</span>
+                        </span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- right -->
+        <div class="col-10 col-md-9 mt-0 right-content">
+            <div class="row gx-0 bg-white h-100">
+                <div class="col-md-8">
+                    <div class="tab-content mt-0" id="v-pills-tabContent" style="overflow-x: hidden;">
+                        <div id="v-pills-allposts" class="tab-pane fade {% if nt == 'all-posts' or not nt %}show active{% endif %} allposts-view" role="tabpanel" aria-labelledby="v-pills-allposts-tab" style="overflow-x: clip;">
+                            <div class="list-group rounded-0">
+                                {% include "./partials/add-post.html" %}
+                                <div class="post-container">
+                                    {% include "./partials/all-posts.html" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="v-pills-following" class="tab-pane fade {% if nt == 'following' %}show active{% endif %} following-view" role="tabpanel"
+                        aria-labelledby="v-pills-following-tab" style="overflow-x: clip;">
+                            <div class="list-group rounded-0">
+                                <div class="post-container">
+                                        {% if user.is_authenticated %}
+                                            {% include "./partials/following.html" %}
+                                        {% else %}
+                                            {% include "./login.html" %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="v-pills-profile" class="tab-pane fade profile-view {% if nt == 'profile' %}show active{% endif %}" role="tabpanel"
+                                aria-labelledby="v-pills-profile-tab" style="overflow-x: clip;">
+                                <div class="list-group rounded-0">
+                                    <div class="post-container">
+                                        {% if user.is_authenticated %}
+                                            {% include "./partials/profile.html" %}
+                                        {% else %}
+                                            {% include "./login.html" %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% if not user.is_authenticated %}
+                            <div id="v-pills-login" class="tab-pane fade login-view {% if nt == 'login' %}active show{% endif %}" role="tabpanel"
+                                aria-labelledby="v-pills-login-tab" style="overflow-x: clip;">
+                                <div class="list-group rounded-0">
+                                    {% include "./login.html" %}
+                                </div>
+                            </div>
+                            <div id="v-pills-register" class="tab-pane fade register-view {% if nt == 'register' %}active show{% endif %}" role="tabpanel"
+                                aria-labelledby="v-pills-register-tab" style="overflow-x: clip;">
+                                <div class="list-group rounded-0">
+                                    {% include "./register.html" %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border-start border-sm-start-0 h-100 p-3">
+                        {% include "./partials/likehistory.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+
+    <!-- <script>
+        let check_tab_gear = () => {
+            let tabEls = document.querySelectorAll('a[data-bs-toggle="pill"]');
+            if(!tabEls.length) return false;
+            tabEls.forEach(el => {
+                el.addEventListener('show.bs.tab', event => {
+                    event.target // newly activated tab
+                    event.relatedTarget // previous active tab
+                    console.log("see: ", tabEls, event.target, event.relatedTarget);
+                    if(event.target.classList.contains('active')) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            });
+        };
+        check_tab_gear();
+    </script> -->
+{% endblock %}

@@ -1,0 +1,44 @@
+{% comment %}
+{% extends "network/layout.html" %}   
+{% endcomment %}
+
+{% comment %}
+    {% block title %}
+        Register
+    {% endblock title %}
+{% endcomment %}
+
+{% block body %}
+
+    <div class="register mx-auto shadow p-4 my-5 text-center col-md-8 rounded">
+        <h2>Register</h2>
+
+        {% if message and register %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        <form class="my-4" action="{% url 'register' %}?nt=register" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input class="form-control" type="text" name="username" placeholder="User Name">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="email" name="email" placeholder="Email Address">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            </div>
+            <input class="btn btn-primary w-100" type="submit" value="Register">
+        </form>
+
+        Already have an account? <a data-bs-toggle="pill" href="#v-pills-login" role="tab" aria-controls="v-pills-login"
+        aria-selected="false">Log In here.</a>
+    </div>
+
+{% endblock %}
