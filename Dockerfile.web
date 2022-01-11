@@ -1,9 +1,9 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM python:3.10-slim-buster AS base
 
-EXPOSE 8000
+# EXPOSE 8000
 
-ENV PORT=8000
+# ENV PORT=8000
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -27,7 +27,7 @@ WORKDIR /app
 COPY ./project4 ./project4
 COPY ./network ./network
 COPY ./manage.py .
-COPY ./entrypoint* .
+COPY ./entrypoint_prod* .
 COPY ./Pipfile .
 COPY ./Pipfile.lock .
 COPY ./requirements.txt .
@@ -44,6 +44,7 @@ RUN pipenv install \
 
 USER appuser
 
+ENTRYPOINT [ "./entrypoint_prod" ]
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 # File wsgi.py was not found in subfolder: 'network'. Please enter the Python path to wsgi file.
