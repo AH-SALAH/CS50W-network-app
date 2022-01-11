@@ -15,7 +15,7 @@ ENV PIPENV_VENV_IN_PROJECT=1
 # Install pip requirements
 RUN python -m pip install --upgrade pip \
     && apt-get update && apt-get install -y libpq-dev python-dev gcc \
-    && pip install pipenv
+    && pip install --no-cache-dir pipenv
 
 # RUN pip install virtualenv
 # RUN virtualenv venv
