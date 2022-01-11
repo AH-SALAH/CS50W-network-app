@@ -31,7 +31,7 @@ def index(request):
         )
 
     except Exception as er:
-        print("An exception occurred", er)
+        print("An exception occurred:index: ", er)
 
     # posts = json.loads(serialize('json', list(posts), fields=('user__username', 'content', 'published_date', 'is_active')))
 
@@ -59,7 +59,7 @@ def profile(request, user_slug):
     p_type = request.GET.get("nt")
 
     try:
-        if user_slug:
+        if user_slug and request.user.is_authenticated:
             p_ctx = profile_ctx(request, user_slug=user_slug)
 
         posts = (
@@ -72,7 +72,7 @@ def profile(request, user_slug):
         )
 
     except Exception as er:
-        print("An exception occurred", er)
+        print("An exception occurred:profile: ", er)
 
     for p in posts:
         p.img = "https://api.lorem.space/image/face?w=50&h=50"
@@ -98,7 +98,7 @@ def following(request, user_slug):
     posts = []
     p_ctx = {}
     try:
-        if user_slug:
+        if user_slug and request.user.is_authenticated:
             p_ctx = following_ctx(request, user_slug=user_slug)
 
         p_type = request.GET.get("nt")
@@ -226,7 +226,7 @@ def last_likes(request):
     try:
         last_likes = likehistory_ctx(request)
     except Exception as er:
-        print("An exception occurred", er)
+        print("An exception occurred:last_likes: ", er)
         return JsonResponse({"error": "Required data not supplied"}, status=404)
 
     return JsonResponse(
@@ -321,6 +321,7 @@ def post(request):
                 return JsonResponse({"error": "No data has been provided"}, status=404)
 
             load = json.loads(body)
+            # cache pk
             pk = json.loads(body).get("pk") or json.loads(body).get("id")
 
             # del the pk to spread **load obj without dublicating pk err
@@ -365,10 +366,13 @@ def post(request):
                 )
         except ValueError as er:
             print("ValueError exception occurred", er)
+            return JsonResponse({"error": er}, status=404)
         except Post.DoesNotExist as er:
-            print("ValueError exception occurred", er)
+            print("Post.DoesNotExist exception occurred", er)
+            return JsonResponse({"error": er}, status=404)
         except Exception as er:
-            print("An exception occurred", er)
+            print("An exception occurred:post: ", er)
+            return JsonResponse({"error": er}, status=500)
 
     else:
         # handle others
@@ -387,7 +391,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("index"), status=200)
         else:
             nt = request.GET.get("nt")
             return render(
@@ -396,7 +400,7 @@ def login_view(request):
                 {"message": "Invalid email and/or password.", "login": True, "nt": nt},
             )
     else:
-        return redirect(reverse("index"))
+        return redirect(reverse("index"), status=405)
 
 
 def logout_view(request):
@@ -411,7 +415,7 @@ def register(request):
 
         if username:
             slugify(username, allow_unicode=True)
-            
+
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]

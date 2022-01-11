@@ -12,11 +12,11 @@ def profile_ctx(request, user_slug=""):
     user_followed = {}
 
     try:
-        user = (
-            User.objects.filter(username=user_slug).first()
-            if user_slug
-            else request.user
-        )
+        if user_slug:
+            user = User.objects.filter(username=user_slug).first()
+        else:
+            user = User.objects.filter(username=request.user).first()
+
         # user posts
         posts = (
             Post.objects.filter(is_active=True, user=user)
@@ -38,7 +38,8 @@ def profile_ctx(request, user_slug=""):
                 Follow.objects.filter(user=request.user)
                 .prefetch_related(
                     Prefetch(
-                        "followings", queryset=User.objects.filter(username=user_slug)
+                        "followings",
+                        queryset=User.objects.filter(username=user_slug),
                     )
                 )
                 .first()
@@ -50,7 +51,7 @@ def profile_ctx(request, user_slug=""):
         user_followers_count = Follow.objects.filter(followings__in=[user]).count()
 
     except Exception as er:
-        print("An exception occurred", er)
+        print("An exception occurred:profile_ctx: ", er)
 
     for p in posts:
         p.img = "https://api.lorem.space/image/face?w=50&h=50"
@@ -65,7 +66,7 @@ def profile_ctx(request, user_slug=""):
         "user_followings_count": user_followings_count,
         "user_followers_count": user_followers_count,
         "is_user_followed": "true" if user_followed else "false",
-        "user_followed": user.pk,
+        "user_followed": (user and user.pk) or 0,
         "user_page_obj": page_obj,
         "user_paginator": paginator,
     }

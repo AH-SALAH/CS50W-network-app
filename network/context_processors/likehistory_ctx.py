@@ -18,6 +18,6 @@ def likehistory_ctx(request):
         ).order_by('-timestamp')
         # print("lastlikes: ", last_likes_posts)
     except Exception as er:
-        print("An exception occurred", er)
+        print("An exception occurred:likehistory_ctx: ", er)
 
     return {"last_likes_history": [p for p in last_likes_history.values()]}

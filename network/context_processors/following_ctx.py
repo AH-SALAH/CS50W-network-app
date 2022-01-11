@@ -9,11 +9,10 @@ def following_ctx(request, user_slug=""):
     followings_count = 0
     try:
 
-        user = (
-            User.objects.filter(username=user_slug).first()
-            if user_slug
-            else request.user
-        )
+        if user_slug:
+            user = User.objects.filter(username=user_slug).first()
+        else:
+            user = User.objects.filter(username=request.user).first()
 
         f = Follow.objects.filter(user=user)
         followings_posts = f.aggregate(
@@ -33,7 +32,7 @@ def following_ctx(request, user_slug=""):
         )
 
     except Exception as er:
-        print("An exception occurred", er)
+        print("An exception occurred:following_ctx: ", er)
 
     for p in posts:
         p.img = "https://api.lorem.space/image/face?w=50&h=50"
