@@ -30,6 +30,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,backend.com").split("
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     "network",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -135,5 +137,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # APPEND_SLASH = False
