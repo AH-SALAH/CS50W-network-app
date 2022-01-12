@@ -26,11 +26,11 @@ WORKDIR /app
 # COPY . .
 COPY ./project4 ./project4
 COPY ./network ./network
-COPY ./manage.py .
-COPY ./entrypoint_prod* .
-COPY ./Pipfile .
-COPY ./Pipfile.lock .
-COPY ./requirements.txt .
+COPY ./manage.py ./
+COPY ./entrypoint_prod* ./
+COPY ./Pipfile ./
+COPY ./Pipfile.lock ./
+COPY ./requirements.txt ./
 
 
 # RUN pipenv lock
