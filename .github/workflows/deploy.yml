@@ -21,15 +21,15 @@ jobs:
           usedocker: true
           docker_heroku_process_type: web
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-          DEBUG: ${{ secrets.DEBUG }}
+          HD_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          HD_ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          HD_DEBUG: ${{ secrets.DEBUG }}
           # db
-          POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          HD_POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
+          HD_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          HD_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          HD_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          HD_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
 
   # custom-deploy:
   #   # The `needs` is added to bypass:
