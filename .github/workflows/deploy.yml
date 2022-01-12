@@ -13,6 +13,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Deploy to Heroku
+        run: heroku container:push web --app --recursive
         # uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -30,7 +31,6 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-        run: heroku container:push web --app --recursive
 
   # custom-deploy:
   #   # The `needs` is added to bypass:
