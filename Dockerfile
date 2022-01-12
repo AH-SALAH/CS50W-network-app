@@ -29,7 +29,7 @@ COPY ./network ./network
 COPY ./manage.py ./
 COPY ./entrypoint* ./
 COPY ./Pipfile ./
-COPY ./Pipfile.lock ./
+# COPY ./Pipfile.lock ./
 COPY ./requirements.txt ./
 
 
