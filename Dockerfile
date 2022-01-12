@@ -42,9 +42,13 @@ RUN pipenv install \
     && chown -R appuser /app
     # && chmod -R 755 /app
 
-ENTRYPOINT [ "./entrypoint_prod.sh" ]
 USER appuser
 
+# ENTRYPOINT [ "./entrypoint_prod.sh" ]
+CMD pipenv run python manage.py makemigrations --no-input \
+    && pipenv run python manage.py migrate --no-input \
+    && pipenv run python manage.py collectstatic --no-input --ignore frontend \
+    && pipenv run gunicorn project4.wsgi:application --bind 0.0.0.0:$PORT
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 # File wsgi.py was not found in subfolder: 'network'. Please enter the Python path to wsgi file.
