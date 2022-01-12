@@ -5,6 +5,7 @@ on:
       - '.github/**'
       - '**/Dockerfile'
       - '**/Dockerfile*'
+      - '**.js'
 
 jobs:
   heroku-deploy:
