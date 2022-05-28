@@ -1,19 +1,26 @@
 <h1 align="center">Network</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/AH-SALAH/network?color=56BEB8">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/AH-SALAH/
+CS50W-network-app?color=56BEB8">
 
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/AH-SALAH/network?color=56BEB8">
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/AH-SALAH/
+CS50W-network-app?color=56BEB8">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/AH-SALAH/network?color=56BEB8">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/AH-SALAH/
+CS50W-network-app?color=56BEB8">
 
-  <img alt="License" src="https://img.shields.io/github/license/AH-SALAH/network?color=56BEB8">
+  <img alt="License" src="https://img.shields.io/github/license/AH-SALAH/
+CS50W-network-app?color=56BEB8">
 
-  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/AH-SALAH/network?color=56BEB8" /> -->
+  <img alt="Github issues" src="https://img.shields.io/github/issues/AH-SALAH/
+CS50W-network-app?color=56BEB8" />
 
-  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/AH-SALAH/network?color=56BEB8" /> -->
+  <img alt="Github forks" src="https://img.shields.io/github/forks/AH-SALAH/
+CS50W-network-app?color=56BEB8" />
 
-  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/AH-SALAH/network?color=56BEB8" /> -->
+  <img alt="Github stars" src="https://img.shields.io/github/stars/AH-SALAH/
+CS50W-network-app?color=56BEB8" />
 </p>
 
 <!-- Status -->
@@ -39,6 +46,7 @@
 ## :dart: About ##
 
 CS50W Proj4 Network App - Twitter Like [App](https://cs50-network-twitter.herokuapp.com/) - [YT video](https://youtu.be/huFoZvwe388)
+
 ## :sparkles: Features ##
 
 :heavy_check_mark: All Posts\
