@@ -38,7 +38,7 @@
 
 ## :dart: About ##
 
-CS50W Proj4 Network App - Twitter Like [App](https://cs50-network-twitter.herokuapp.com/) 
+CS50W Proj4 Network App - Twitter Like [App](https://cs50-network-twitter.herokuapp.com/) - [YT video](https://youtu.be/huFoZvwe388)
 ## :sparkles: Features ##
 
 :heavy_check_mark: All Posts\
