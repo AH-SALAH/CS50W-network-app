@@ -24,8 +24,6 @@ CS50W-network-app?color=56BEB8" />
 
 <hr> -->
 
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=AH-SALAH&show_icons=true&theme=radical)
-
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
   <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
