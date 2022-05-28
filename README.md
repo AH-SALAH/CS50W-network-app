@@ -2,16 +2,15 @@
 
 <p align="center">
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/AH-SALAH/
-CS50W-network-app?color=56BEB8">
+CS50W-network-app?color=56BEB8" />
 
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/AH-SALAH/
-CS50W-network-app?color=56BEB8">
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/AH-SALAH/CS50W-network-app?color=56BEB8" />
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/AH-SALAH/
-CS50W-network-app?color=56BEB8">
+CS50W-network-app?color=56BEB8" />
 
   <img alt="License" src="https://img.shields.io/github/license/AH-SALAH/
-CS50W-network-app?color=56BEB8">
+CS50W-network-app?color=56BEB8" />
 
   <img alt="Github issues" src="https://img.shields.io/github/issues/AH-SALAH/
 CS50W-network-app?color=56BEB8" />
