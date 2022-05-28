@@ -1,24 +1,18 @@
 <h1 align="center">Network</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/AH-SALAH/
+  <img align="center" alt="Github top language" src="https://img.shields.io/github/languages/top/AH-SALAH/
 CS50W-network-app?color=56BEB8" />
-
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/AH-SALAH/CS50W-network-app?color=56BEB8" />
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/AH-SALAH/
+  <img align="center" alt="Github language count" src="https://img.shields.io/github/languages/count/AH-SALAH/CS50W-network-app?color=56BEB8" />
+  <img align="center" alt="Repository size" src="https://img.shields.io/github/repo-size/AH-SALAH/
 CS50W-network-app?color=56BEB8" />
-
-  <img alt="License" src="https://img.shields.io/github/license/AH-SALAH/
+  <img align="center" alt="License" src="https://img.shields.io/github/license/AH-SALAH/
 CS50W-network-app?color=56BEB8" />
-
-  <img alt="Github issues" src="https://img.shields.io/github/issues/AH-SALAH/
+  <img align="center" alt="Github issues" src="https://img.shields.io/github/issues/AH-SALAH/
 CS50W-network-app?color=56BEB8" />
-
-  <img alt="Github forks" src="https://img.shields.io/github/forks/AH-SALAH/
+  <img align="center" alt="Github forks" src="https://img.shields.io/github/forks/AH-SALAH/
 CS50W-network-app?color=56BEB8" />
-
-  <img alt="Github stars" src="https://img.shields.io/github/stars/AH-SALAH/
+  <img align="center" alt="Github stars" src="https://img.shields.io/github/stars/AH-SALAH/
 CS50W-network-app?color=56BEB8" />
 </p>
 
@@ -29,6 +23,8 @@ CS50W-network-app?color=56BEB8" />
 </h4> 
 
 <hr> -->
+
+![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=AH-SALAH&show_icons=true&theme=radical)
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
